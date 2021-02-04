@@ -1,0 +1,24 @@
+<% if @users.empty? %>
+  No users yet.
+<% else %>
+  <% @users.each do |user| %>
+    <hr>
+    <p>ID: <%= user.id %></p>
+    <p>Name: <%= user.name %></p>
+    <p>Country: <%= user.country %></p>
+    <p>Age: <%= user.age %></p>
+    <p>Email: <%= user.email %></p>
+  <% end %>
+<% end %>
+
+<br>
+
+<% if signed_in? %>
+
+  <p><strong>Create New Post</strong></p>
+  <%= form_for @post do |f| %>
+    <%= f.label :content %> <br>
+    <%= f.text_area :content %><br>
+    <%= f.submit %>
+  <% end %>
+<% end %>

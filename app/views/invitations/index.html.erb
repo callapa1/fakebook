@@ -1,0 +1,54 @@
+<p><strong>Incoming requests:</p></strong><br> 
+<% if current_user.pending_invitations.empty? %>
+  No requests to show.
+  <br><br>
+<% else %>
+  <% current_user.pending_invitations.each do |invitation| %>
+    From: <%= invitation.user.name %> | <%= invitation.user.email %> <br>
+    <%= link_to "Accept Friend", invitation_path(invitation.id), method: :put %><br>
+    <hr>
+  <% end %>
+<% end %>
+
+<p><strong>Unanswered requests:</p></strong><br> 
+<% if current_user.sent_invitations.empty? %>
+  No requests sent.
+  <br>
+<% else %>
+  <% current_user.sent_invitations.each do |invitation| %>
+    To: <%= invitation.friend.name %> <%= invitation.friend.email %>
+    <hr>
+  <% end %>
+<% end %>
+
+
+<p><strong>Confirmed friends:</p></strong><br>
+<% if current_user.friends.empty? %>
+  No friends to show.
+  <br><br>
+<% else %>
+  <% current_user.friends.each do |friend| %>
+    <%= friend.name %> <br>
+    <%= link_to "Delete Friend", invitation_path(friend),
+              method: :delete, data: { confirm: "Are you sure?" } %> <hr>
+  <% end %>
+<% end %>
+
+<p><strong>Add friends:</p></strong><br>
+<% if @users.empty? %>
+  No users yet.
+<% else %>
+  <% @users.each do |user| %>
+    <% next if current_user.sent_invitations.where(friend_id: user.id).exists? %>
+    <% next if current_user == user %>
+    
+    <p>ID: <%= user.id %></p>
+    <p>Name: <%= user.name %></p>
+    <p>Country: <%= user.country %></p>
+    <p>Age: <%= user.age %></p>
+    <p>Email: <%= user.email %></p>
+    <p> <%= link_to "Send Friend Request", invitations_path(user: user), method: :create %> </p>
+    <hr>
+  <% end %>
+  
+<% end %>

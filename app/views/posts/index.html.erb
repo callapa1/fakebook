@@ -1,0 +1,10 @@
+<% if @posts.empty? %>
+  No posts yet.
+<% else %>
+  <strong>ALL POSTS:</strong>
+  <% @posts.each do |post| %>
+    <hr>
+    <p>Content: <%= post.content %></p>
+    <p>Author: <%= post.user.name %></p>
+  <% end %>
+<% end %>

@@ -1,0 +1,9 @@
+<% if signed_in? %>
+  <strong><%= current_user.id %> <%= current_user.email %></strong> logged in |
+  <%= link_to "Edit Profile", edit_user_registration_path %> | 
+  <%= link_to "Sign out", destroy_user_session_path, method: :delete %> | 
+  <%= link_to "Friends", friends_path %>
+<% else%>
+  <%= link_to "Log in", login_path %> | 
+  <%= link_to "Sign up", signup_path %> 
+<% end %>
