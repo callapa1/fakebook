@@ -10,15 +10,3 @@
     <p>Email: <%= user.email %></p>
   <% end %>
 <% end %>
-
-<br>
-
-<% if signed_in? %>
-
-  <p><strong>Create New Post</strong></p>
-  <%= form_for @post do |f| %>
-    <%= f.label :content %> <br>
-    <%= f.text_area :content %><br>
-    <%= f.submit %>
-  <% end %>
-<% end %>

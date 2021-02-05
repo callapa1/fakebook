@@ -9,8 +9,18 @@ class User < ApplicationRecord
              greater_than_or_equal_to: 13, less_than_or_equal_to: 118 }
   validates :email, presence: true, uniqueness: true
 
+  # Avatar
+  has_one_attached :avatar
+
   # Posts
   has_many :posts
+
+  # Likes
+  has_many :active_likes, class_name: "Like", foreign_key: :liker_id
+  has_many :liked_posts, through: :active_likes, source: :liked
+
+  # Comments
+  has_many :comments
 
   # Friend invitations
   has_many :invitations
@@ -18,8 +28,16 @@ class User < ApplicationRecord
             class_name: "Invitation", foreign_key: "friend_id"
   has_many :sent_invitations, -> { where confirmed: false },
             class_name: "Invitation", foreign_key: "user_id"
-  
 
+  # Avatar method
+
+
+  # Likes methods
+  def like(post)
+    active_likes.create(liker_id: self, liked_id: post)
+  end
+
+  # Friend methods
   def friends
     friends_i_sent_invitation = Invitation.where(user_id: id, confirmed: true).pluck(:friend_id)
     friends_i_got_invitation = Invitation.where(friend_id: id, confirmed: true).pluck(:user_id)

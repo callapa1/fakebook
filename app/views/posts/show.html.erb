@@ -1,0 +1,10 @@
+<p>POST ID: <%= @post.id %></p>
+<p>Content: <%= @post.content %></p>
+<p>Author: <%= @post.user.name %></p>
+<p>Date: <%= @post.created_at %></p>
+
+<br>
+
+<p>Comments:</p> <br>
+<%= render "comments/feed" %> <br><br>
+<%= render "comments/form" %>

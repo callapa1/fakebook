@@ -1,0 +1,10 @@
+<% if @post.comments.empty? %>
+  No comments.
+<% else %>
+  <% @post.comments.each do |comment| %>
+    <p><%= comment.user.name %>: <%= comment.body %> 
+    <% if @post.user == current_user || comment.user == current_user %>
+      <%= link_to "Delete", post_comment_path(@post, comment), method: :delete %>
+    <% end %></p>
+  <% end %>
+<% end %>

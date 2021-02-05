@@ -1,10 +1,36 @@
-<% if @posts.empty? %>
-  No posts yet.
-<% else %>
-  <strong>ALL POSTS:</strong>
-  <% @posts.each do |post| %>
-    <hr>
-    <p>Content: <%= post.content %></p>
-    <p>Author: <%= post.user.name %></p>
-  <% end %>
-<% end %>
+<div class="columns">
+  <div class="column is-offset-1">
+    <% if @posts.empty? %>
+      No posts yet.
+    <% else %>
+      <strong>ALL POSTS:</strong>
+      <% @posts.each do |post| %>
+        <hr>
+        <p>POST ID: <%= post.id %></p>
+        <p>Content: <%= post.content %></p>
+        <p>Author: <%= post.user.name %></p>
+        <%= link_to post_path(post) do %>
+          <p>Date: <%= post.created_at %></p>
+        <% end %>
+        <p>❤: <%= post.passive_likes.count %></p>
+        <% if post.passive_likes.where(liker_id: current_user).exists? %>
+          <%= link_to "Remove Like", post_like_path(post), method: :delete %>
+        <% else %>
+        <p><%= link_to "Like", post_likes_path(id: post), method: :post %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  
+
+    <br><br>
+
+    <% if signed_in? %>
+      <p><strong>Create New Post</strong></p>
+      <%= form_for @post do |f| %>
+        <%= f.label :content %> <br>
+        <%= f.text_area :content %><br>
+        <%= f.submit %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
