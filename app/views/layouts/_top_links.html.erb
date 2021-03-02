@@ -1,16 +1,33 @@
-<% if signed_in? %>
-  <div id="buttons-container">
-    <%= link_to "Home", root_path, :class => "button is-small" %> 
-    <span><%= image_tag user_avatar(current_user, 25), :class => "avatar_image" %> <strong><%= current_user.email %></strong> logged in</span>
-    <%= link_to "Edit Profile", edit_user_registration_path, :class => "button is-small" %> 
-    <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => "button is-danger is-small" %> 
-    <%= link_to friends_path, :class => "button is-small" do %>
-      Friends (<%= current_user.pending_invitations.count %>)
-    <% end %>
-</div>
-  <% else %>
-<div id="buttons-container" style="width:10%" >
-    <%= link_to "Log in", login_path, :class => "button is-small" %>
-    <%= link_to "Sign up", signup_path, :class => "button is-small" %> 
-  <% end %>
-</div>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <% if signed_in? %>
+
+            <%= link_to "Home", root_path, :class => "button" %>
+
+            <a class="button" href="/users/<%= current_user.id %>">
+              <%= image_tag user_avatar(current_user, 25), :class => "avatar-image" %> <%= current_user.email %> logged in.
+            </a>
+
+            <%= link_to "Edit Profile", edit_user_registration_path, :class => "button" %> 
+
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => "button is-danger" %> 
+            <%= link_to friends_path, :class => "button" do %>
+              Friends (<%= current_user.pending_invitations.count %>)
+          <% end %>
+
+            <% else %>
+          
+            <%= link_to "Sign up", signup_path, :class => "button is-primary strong" %>
+
+            <%= link_to "Log in", login_path, :class => "button is-light" %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
