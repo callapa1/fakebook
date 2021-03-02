@@ -10,27 +10,24 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   # Avatar
-  has_one_attached :avatar
+  has_one_attached :avatar, dependent: :destroy
 
   # Posts
-  has_many :posts
+  has_many :posts, dependent: :destroy
 
   # Likes
-  has_many :active_likes, class_name: "Like", foreign_key: :liker_id
-  has_many :liked_posts, through: :active_likes, source: :liked
+  has_many :active_likes, class_name: "Like", foreign_key: :liker_id, dependent: :destroy
+  has_many :liked_posts, through: :active_likes, source: :liked, dependent: :destroy
 
   # Comments
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   # Friend invitations
-  has_many :invitations
+  has_many :invitations, dependent: :destroy
   has_many :pending_invitations, -> { where confirmed: false },
-            class_name: "Invitation", foreign_key: "friend_id"
+            class_name: "Invitation", foreign_key: "friend_id", dependent: :destroy
   has_many :sent_invitations, -> { where confirmed: false },
-            class_name: "Invitation", foreign_key: "user_id"
-
-  # Avatar method
-
+            class_name: "Invitation", foreign_key: "user_id", dependent: :destroy
 
   # Likes methods
   def like(post)

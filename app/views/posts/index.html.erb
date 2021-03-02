@@ -1,9 +1,10 @@
 <div class="columns">
-  <div class="column is-offset-1">
+  <div class="column is-one-fifth"></div>
+  <div class="column is-half">
     <% if @posts.empty? %>
       No posts yet.
     <% else %>
-      <strong>ALL POSTS:</strong>
+      <strong>RECENT POSTS:</strong>
       <% @posts.each do |post| %>
         <hr>
         <p>POST ID: <%= post.id %></p>
@@ -30,6 +31,20 @@
         <%= f.label :content %> <br>
         <%= f.text_area :content %><br>
         <%= f.submit %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="column">
+    <p><strong>Friends:</p></strong><br>
+    <% if current_user.friends.empty? %>
+      No friends to show.
+      <br><br>
+    <% else %>
+      <% current_user.friends.each do |friend| %>
+        <%= friend.name %> <br>
+        <%= link_to "Delete Friend", invitation_path(friend),
+                  method: :delete, data: { confirm: "Are you sure?" } %> <hr>
       <% end %>
     <% end %>
   </div>

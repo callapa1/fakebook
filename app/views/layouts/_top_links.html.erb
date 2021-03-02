@@ -1,6 +1,6 @@
 <% if signed_in? %>
 <%= link_to "Home", root_path %> | 
-  <strong><%= image_tag user_avatar(current_user, 25) %> <%= current_user.id %> <%= current_user.email %></strong> logged in |
+  <strong><%= image_tag user_avatar(current_user, 25), :class => "avatar_image" %> <%= current_user.email %></strong> logged in |
   <%= link_to "Edit Profile", edit_user_registration_path %> | 
   <%= link_to "Sign out", destroy_user_session_path, method: :delete %> | 
   <%= link_to friends_path do %>

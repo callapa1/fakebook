@@ -3,7 +3,7 @@ module ApplicationHelper
     if user.avatar.attached?
       user.avatar.variant(resize: "#{size}x#{size}!")
     else
-      image_tag("default_profile.jpg")
+      gravatar_image_url(user.email, size: 40)
     end
   end
 end
