@@ -11,9 +11,11 @@
   </head>
 
   <body>
-    <br><br>
-    <%= render "/layouts/top_links" %>
-    <br><br>
-    <%= yield %>
+    <nav id="top-nav">
+      <%= render "/layouts/top_links" %>
+    </nav>
+    <div class="container columns">
+      <%= yield %>
+    </div>
   </body>
 </html>

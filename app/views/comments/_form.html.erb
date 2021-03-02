@@ -1,8 +1,19 @@
-<%= form_with model: @comment, url: post_comments_path(@post), method: "post", post_id: @post do |f| %>
-  <p><%= f.label "Comment" %>
-  <%= f.text_field :body %></p>
-  
-  <p>You: <%= current_user.name %></p>
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <%= image_tag user_avatar(current_user), :class => "avatar_image" %>
+    </p>
+  </figure>
 
-  <%= f.submit "Send" %>
-<% end %>
+  <div class="media-content">
+  
+    <%= form_with model: @comment, url: post_comments_path(@post), method: "post", post_id: @post do |f| %>
+      <p><%= f.label "Comment", :class => "label" %>
+      <%= f.text_field :body, :class => "input is-small" %></p>
+      
+      <p>You: <%= current_user.name %></p>
+
+      <%= f.submit "Send", :class => "button is-small is-info" %>
+    <% end %>
+  </div>
+</article>

@@ -1,51 +1,64 @@
-<div class="columns">
-  <div class="column is-one-fifth"></div>
-  <div class="column is-half">
-    <% if @posts.empty? %>
-      No posts yet.
-    <% else %>
-      <strong>RECENT POSTS:</strong>
-      <% @posts.each do |post| %>
-        <hr>
-        <p>POST ID: <%= post.id %></p>
-        <p>Content: <%= post.content %></p>
-        <p>Author: <%= post.user.name %></p>
-        <%= link_to post_path(post) do %>
-          <p>Date: <%= post.created_at %></p>
-        <% end %>
-        <p>❤: <%= post.passive_likes.count %></p>
-        <% if post.passive_likes.where(liker_id: current_user).exists? %>
-          <%= link_to "Remove Like", post_like_path(post), method: :delete %>
-        <% else %>
-        <p><%= link_to "Like", post_likes_path(id: post), method: :post %></p>
-        <% end %>
-      <% end %>
-    <% end %>
-  
+<div class="column is-one-fifth"></div>
+<div class="column is-half">
+  <% if @posts.empty? %>
+    No posts yet.
+  <% else %>
+    <p class="title is-5">RECENT POSTS:</p>
+    <% @posts.each do |post| %>
+      <div class="box">
+        <article class="media">
+          <div class="media-left">
+            <figure class="image is-64x64">
+              <%= image_tag user_avatar(post.user), :class => "avatar_image" %>
+            </figure>
+          </div>
 
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <strong><%= post.user.name %></strong>
+              </p>
+              <p><%= post.content %></p>
+            </div>
+            
+            <%= link_to post_path(post) do %>
+              <p><%= post.created_at.to_s(:long) %></p>
+            <% end %>
+
+            <p>❤: <%= post.passive_likes.count %></p>
+            <% if post.passive_likes.where(liker_id: current_user).exists? %>
+              <%= link_to "Remove Like", post_like_path(post), method: :delete %>
+            <% else %>
+            <p><%= link_to "Like", post_likes_path(id: post), method: :post %></p>
+            <% end %>
+          </div>
+        </article>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if signed_in? %>
+    <p class="title is-5">Create New Post</p>
+    <%= form_for @post, :html => { :class => 'box' } do |f| %>
+      <div class="field">
+        <%= f.label :content, :class => "label" %>
+        <%= f.text_area :content, :class => "textarea" %>
+      </div>
+      <%= f.submit "Create", :class => "button is-primary" %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="column">
+  <p><strong>Friends:</p></strong><br>
+  <% if current_user.friends.empty? %>
+    No friends to show.
     <br><br>
-
-    <% if signed_in? %>
-      <p><strong>Create New Post</strong></p>
-      <%= form_for @post do |f| %>
-        <%= f.label :content %> <br>
-        <%= f.text_area :content %><br>
-        <%= f.submit %>
-      <% end %>
+  <% else %>
+    <% current_user.friends.each do |friend| %>
+      <%= friend.name %> <br>
+      <%= link_to "Delete Friend", invitation_path(friend),
+                method: :delete, data: { confirm: "Are you sure?" } %> <hr>
     <% end %>
-  </div>
-
-  <div class="column">
-    <p><strong>Friends:</p></strong><br>
-    <% if current_user.friends.empty? %>
-      No friends to show.
-      <br><br>
-    <% else %>
-      <% current_user.friends.each do |friend| %>
-        <%= friend.name %> <br>
-        <%= link_to "Delete Friend", invitation_path(friend),
-                  method: :delete, data: { confirm: "Are you sure?" } %> <hr>
-      <% end %>
-    <% end %>
-  </div>
+  <% end %>
 </div>

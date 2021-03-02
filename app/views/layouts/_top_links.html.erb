@@ -1,13 +1,16 @@
 <% if signed_in? %>
-<%= link_to "Home", root_path %> | 
-  <strong><%= image_tag user_avatar(current_user, 25), :class => "avatar_image" %> <%= current_user.email %></strong> logged in |
-  <%= link_to "Edit Profile", edit_user_registration_path %> | 
-  <%= link_to "Sign out", destroy_user_session_path, method: :delete %> | 
-  <%= link_to friends_path do %>
-    Friends (<%= current_user.pending_invitations.count %>)
+  <div id="buttons-container">
+    <%= link_to "Home", root_path, :class => "button is-small" %> 
+    <span><%= image_tag user_avatar(current_user, 25), :class => "avatar_image" %> <strong><%= current_user.email %></strong> logged in</span>
+    <%= link_to "Edit Profile", edit_user_registration_path, :class => "button is-small" %> 
+    <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => "button is-danger is-small" %> 
+    <%= link_to friends_path, :class => "button is-small" do %>
+      Friends (<%= current_user.pending_invitations.count %>)
+    <% end %>
+</div>
+  <% else %>
+<div id="buttons-container" style="width:10%" >
+    <%= link_to "Log in", login_path, :class => "button is-small" %>
+    <%= link_to "Sign up", signup_path, :class => "button is-small" %> 
   <% end %>
-
-<% else%>
-  <%= link_to "Log in", login_path %> | 
-  <%= link_to "Sign up", signup_path %> 
-<% end %>
+</div>
