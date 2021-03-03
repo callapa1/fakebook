@@ -29,9 +29,10 @@
     <br><br>
   <% else %>
     <% current_user.friends.each do |friend| %>
-      <%= friend.name %> <br>
-      <%= link_to "Delete Friend", invitation_path(friend),
+      <p><%= friend.name %>
+      <%= link_to "Unfriend", invitation_path(friend),
                 method: :delete, data: { confirm: "Are you sure?" } %>
+      </p>
     <% end %>
   <% end %>
   <br><br>
