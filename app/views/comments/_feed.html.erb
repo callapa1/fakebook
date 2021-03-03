@@ -2,9 +2,14 @@
   No comments.
 <% else %>
   <% @post.comments.each do |comment| %>
-    <p><%= comment.user.name %>: <%= comment.body %> 
+    <p>
+      <%= link_to user_path(comment.user) do %>
+        <%= comment.user.name %>
+      <% end %>
+    : <%= comment.body %> 
     <% if @post.user == current_user || comment.user == current_user %>
       <%= link_to "Delete", post_comment_path(@post, comment), method: :delete %>
-    <% end %></p>
+    <% end %>
+    </p>
   <% end %>
 <% end %>

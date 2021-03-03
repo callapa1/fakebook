@@ -12,13 +12,16 @@
         <p>
           <strong><%= @post.user.name %></strong>
         </p>
-        <p><%= @post.content %></p>
-        <p><%= @post.created_at %></p>
+        <p>><%= @post.content %></p>
+        <p><%= @post.created_at.to_s(:long) %></p>
       </div>
     </div>
   </article>
-
-  <p class="subtitle is-6">Comments:</p>
-  <%= render "comments/feed" %>
-  <%= render "comments/form" %>
+  <div class="box no-shadow" >
+    <p class="subtitle is-6"><b>Comments:</b></p>
+    <%= render "comments/feed" %>
+    <div class="box no-shadow" >
+      <%= render "comments/form" %>
+    </div>
+  </div>
 </div>

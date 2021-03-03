@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   end
   resources :invitations, only: [:create, :update, :destroy]
   resources :post_likes, only: [:create, :destroy]
-  resources :user, only: [:show]
-  get '/users/:id', to: 'users#show'
+  resources :users, only: [:show]
+  get '/user/:id', to: 'users#show'
 
   get "/friends", to: "invitations#index"
 end

@@ -28,6 +28,9 @@
         <% else %>
         <p><%= link_to "Like", post_likes_path(id: post), method: :post %></p>
         <% end %>
+        <% if current_user == @user %>
+          <%= link_to "Delete Post", post_path(post), method: :delete  %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

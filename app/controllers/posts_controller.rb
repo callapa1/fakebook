@@ -20,6 +20,13 @@ class PostsController < ApplicationController
     @post = @user.posts.create(post_params)
     redirect_to root_path
   end
+  
+  def destroy
+    @user = current_user
+    @post = Post.find(params[:id])
+    @post.delete
+    redirect_to user_path(@user)
+  end
 
   private
   

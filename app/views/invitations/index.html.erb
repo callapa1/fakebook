@@ -18,8 +18,7 @@
     <br>
   <% else %>
     <% current_user.sent_invitations.each do |invitation| %>
-      To: <%= invitation.friend.name %> <%= invitation.friend.email %>
-      <hr>
+      <p>To: <%= invitation.friend.name %> <%= invitation.friend.email %></p>
     <% end %>
   <% end %>
 
@@ -32,16 +31,18 @@
     <% current_user.friends.each do |friend| %>
       <%= friend.name %> <br>
       <%= link_to "Delete Friend", invitation_path(friend),
-                method: :delete, data: { confirm: "Are you sure?" } %> <hr>
+                method: :delete, data: { confirm: "Are you sure?" } %>
     <% end %>
   <% end %>
-
-  <p><strong>Add friends:</p></strong><br>
+  <br><br>
+  <h3><strong>Add friends:</strong></h3>
+  <br>
   <% if @users.empty? %>
     No users yet.
   <% else %>
     <% @users.each do |user| %>
       <% next if current_user.sent_invitations.where(friend_id: user.id).exists? %>
+      <% next if current_user.friends.include?(user) %>
       <% next if current_user == user %>
       
       <%= image_tag user_avatar(user, 25), :class => "avatar_image" %>

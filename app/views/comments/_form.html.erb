@@ -6,14 +6,12 @@
   </figure>
 
   <div class="media-content">
-  
     <%= form_with model: @comment, url: post_comments_path(@post), method: "post", post_id: @post do |f| %>
       <p><%= f.label "Comment", :class => "label" %>
       <%= f.text_field :body, :class => "input is-small" %></p>
-      
-      <p>You: <%= current_user.name %></p>
-
-      <%= f.submit "Send", :class => "button is-small is-info" %>
+      <div id="margin-top">
+        <%= f.submit "Send", :class => "button is-small is-info" %>
+      </div>
     <% end %>
   </div>
 </article>
